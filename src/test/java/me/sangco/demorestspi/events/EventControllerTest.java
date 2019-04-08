@@ -48,16 +48,16 @@ public class EventControllerTest {
                 .build();
 
         mockMvc.perform(post("/api/events/")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaTypes.HAL_JSON)
-                    .content(objectMapper.writeValueAsString(event)))
+                .contentType(MediaType.APPLICATION_JSON_UTF8) //요청타입
+                .accept(MediaTypes.HAL_JSON) //받고싶은 타입
+                .content(objectMapper.writeValueAsString(event))) //event를 json을 String으로 맵핑
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").exists())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("free").value(Matchers.not(false)))
-                .andExpect(jsonPath("offline").value(Matchers.not(true)))
+                .andExpect(status().isCreated()) // 201 상태인지 확인
+                .andExpect(jsonPath("id").exists()) //ID가 있는지 확인
+                .andExpect(header().exists(HttpHeaders.LOCATION)) // HEADER에 Location 있는지 확인
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_UTF8_VALUE)) //Content-Type 값 확인
+                .andExpect(jsonPath("free").value(false)) // free가 false
+                .andExpect(jsonPath("offline").value(true))
                 .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()));
     }
 
