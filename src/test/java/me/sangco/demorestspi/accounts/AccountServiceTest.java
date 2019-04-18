@@ -36,18 +36,19 @@ public class AccountServiceTest {
     @Test
     @TestDescription("유저 인증 테스트")
     public void findByUsername() {
+
         // Given
         String password = "freelife";
         String username = "freelife@gmail.com";
-        Account account = Account.builder()
-                .email(username)
-                .password(password)
-                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
-                .build();
-        this.accountService.saveAccount(account);
+//        Account account = Account.builder()
+//                .email(username)
+//                .password(password)
+//                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
+//                .build();
+//        this.accountService.saveAccount(account);
 
         // When
-//        UserDetailsService userDetailsService = (UserDetailsService) accountService;
+        UserDetailsService userDetailsService = (UserDetailsService) accountService;
         UserDetails userDetails = accountService.loadUserByUsername(username);
 
         // Then

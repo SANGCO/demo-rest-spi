@@ -28,23 +28,23 @@ public class AppConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-//    @Bean
-//    public ApplicationRunner applicationRunner() {
-//        return new ApplicationRunner() {
-//            @Autowired
-//            AccountService accountService;
-//
-//            @Override
-//            public void run(ApplicationArguments args) throws Exception {
-//                Account freelife = Account.builder()
-//                        .email("freelife@gmail.com")
-//                        .password("freelife")
-//                        .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
-//                        .build();
-//                accountService.saveAccount(freelife);
-//            }
-//        };
-//    }
+    @Bean
+    public ApplicationRunner applicationRunner() {
+        return new ApplicationRunner() {
+            @Autowired
+            AccountService accountService;
+
+            @Override
+            public void run(ApplicationArguments args) throws Exception {
+                Account freelife = Account.builder()
+                        .email("freelife@gmail.com")
+                        .password("freelife")
+                        .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
+                        .build();
+                accountService.saveAccount(freelife);
+            }
+        };
+    }
 
 }
 
