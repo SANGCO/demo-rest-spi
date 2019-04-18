@@ -1,6 +1,7 @@
 package me.sangco.demorestspi.events;
 
 import lombok.*;
+import me.sangco.demorestspi.accounts.Account;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ public class Event {
     private boolean free; //유료 여부
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT; // 이벤트 상태
+    @ManyToOne
+    private Account manager; //account 관리자
 
     public void update() {
         this.free = this.basePrice == 0 && this.maxPrice == 0 ? true : false;
