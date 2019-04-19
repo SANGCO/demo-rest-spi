@@ -40,12 +40,12 @@ public class AccountServiceTest {
         // Given
         String password = "freelife";
         String username = "freelife@gmail.com";
-//        Account account = Account.builder()
-//                .email(username)
-//                .password(password)
-//                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
-//                .build();
-//        this.accountService.saveAccount(account);
+        Account account = Account.builder()
+                .email(username)
+                .password(password)
+                .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
+                .build();
+        this.accountService.saveAccount(account);
 
         // When
         UserDetailsService userDetailsService = (UserDetailsService) accountService;
