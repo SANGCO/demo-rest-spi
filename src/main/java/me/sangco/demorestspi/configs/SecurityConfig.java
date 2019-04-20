@@ -16,8 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-import static org.springframework.http.HttpMethod.*;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -61,12 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin() //폼 인증 사용
                 .and()
                 .authorizeRequests() //허용할 요청
-                .mvcMatchers(GET, "/api/**").authenticated()  //.anonymous() // /api/ 경로의 모든걸 익명사용자에게 허용
+                .mvcMatchers(HttpMethod.GET, "/api/**").permitAll()  //.anonymous() // /api/ 경로의 모든걸 익명사용자에게 허용
                 .anyRequest().authenticated(); // 나머지는 인증이 필요
 
     }
-
-
 
 }
 
