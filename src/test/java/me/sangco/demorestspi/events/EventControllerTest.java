@@ -4,6 +4,7 @@ import me.sangco.demorestspi.accounts.Account;
 import me.sangco.demorestspi.accounts.AccountRepository;
 import me.sangco.demorestspi.accounts.AccountRole;
 import me.sangco.demorestspi.accounts.AccountService;
+import me.sangco.demorestspi.common.AppProperties;
 import me.sangco.demorestspi.common.BaseControllerTest;
 import me.sangco.demorestspi.common.TestDescription;
 import org.junit.Before;
@@ -39,6 +40,9 @@ public class EventControllerTest extends BaseControllerTest {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    AppProperties appProperties;
 
     @Before
     public void setUp() {
@@ -341,21 +345,17 @@ public class EventControllerTest extends BaseControllerTest {
 
     private String getAccessToken() throws Exception {
         // Given
-        String username = "freelife@gmail.com";
-        String password = "freelife";
         Account freelife = Account.builder()
-                .email(username)
-                .password(password)
+                .email(appProperties.getUserUsername())
+                .password(appProperties.getUserPassword())
                 .roles(Set.of(AccountRole.ADMIN, AccountRole.USER))
                 .build();
         this.accountService.saveAccount(freelife);
 
-        String clientId = "myApp";
-        String clientSecret = "pass";
         ResultActions perform = this.mockMvc.perform(post("/oauth/token")
-                .with(httpBasic(clientId, clientSecret)) // Basic OAuth Header
-                .param("username", username)
-                .param("password", password)
+                .with(httpBasic(appProperties.getClientId(), appProperties.getClientSecret())) // Basic OAuth Header
+                .param("username", appProperties.getUserUsername())
+                .param("password", appProperties.getUserPassword())
                 .param("grant_type", "password"));
         var responseBody = perform.andReturn().getResponse().getContentAsString();
         Jackson2JsonParser parser = new Jackson2JsonParser();
