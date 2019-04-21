@@ -1,7 +1,9 @@
 package me.sangco.demorestspi.events;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import me.sangco.demorestspi.accounts.Account;
+import me.sangco.demorestspi.accounts.AccountSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT; // 이벤트 상태
     @ManyToOne
+    @JsonSerialize(using = AccountSerializer.class)
     private Account manager; //account 관리자
 
     public void update() {
